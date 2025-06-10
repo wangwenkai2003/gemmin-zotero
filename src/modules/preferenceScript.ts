@@ -1,5 +1,6 @@
 import { config } from "../../package.json";
 import { getString } from "../utils/locale";
+import { getPref, setPref } from "../utils/prefs"; // 导入 getPref 和 setPref
 
 export async function registerPrefsScripts(_window: Window) {
   // This function is called when the prefs window is opened
@@ -20,18 +21,18 @@ export async function registerPrefsScripts(_window: Window) {
         },
       ],
       rows: [
-        {
-          title: "Orange",
-          detail: "It's juicy",
-        },
-        {
-          title: "Banana",
-          detail: "It's sweet",
-        },
-        {
-          title: "Apple",
-          detail: "I mean the fruit APPLE",
-        },
+        // { // 移除硬编码的示例数据
+        //   title: "Orange",
+        //   detail: "It's juicy",
+        // },
+        // { // 移除硬编码的示例数据
+        //   title: "Banana",
+        //   detail: "It's sweet",
+        // },
+        // { // 移除硬编码的示例数据
+        //   title: "Apple",
+        //   detail: "I mean the fruit APPLE",
+        // },
       ],
     };
   } else {
@@ -39,6 +40,22 @@ export async function registerPrefsScripts(_window: Window) {
   }
   updatePrefsUI();
   bindPrefEvents();
+
+  // 加载并显示保存的 API Key
+  const apiKeyInput = addon.data.prefs.window.document?.querySelector(
+    `#zotero-prefpane-${config.addonRef}-apiKey`,
+  ) as HTMLInputElement;
+  if (apiKeyInput) {
+    apiKeyInput.value = getPref("apiKey") || "";
+  }
+
+  // 加载并显示保存的模型选择
+  const modelMenulist = addon.data.prefs.window.document?.querySelector(
+    `#zotero-prefpane-${config.addonRef}-model`,
+  ) as XUL.MenuList;
+  if (modelMenulist) {
+    modelMenulist.value = getPref("model") || "gemini-pro"; // 设置默认值
+  }
 }
 
 async function updatePrefsUI() {
@@ -114,7 +131,7 @@ function bindPrefEvents() {
     ?.addEventListener("command", (e: Event) => {
       ztoolkit.log(e);
       addon.data.prefs!.window.alert(
-        `Successfully changed to ${(e.target as XUL.Checkbox).checked}!`,
+        `Successfully changed to ${(e.target as XUL.Checkbox).checked}!`, 
       );
     });
 
@@ -125,7 +142,29 @@ function bindPrefEvents() {
     ?.addEventListener("change", (e: Event) => {
       ztoolkit.log(e);
       addon.data.prefs!.window.alert(
-        `Successfully changed to ${(e.target as HTMLInputElement).value}!`,
+        `Successfully changed to ${(e.target as HTMLInputElement).value}!`, 
       );
+    });
+
+  // 为 API Key 输入框添加 change 事件监听器，保存 API Key
+  addon.data
+    .prefs!.window.document?.querySelector(
+      `#zotero-prefpane-${config.addonRef}-apiKey`,
+    )
+    ?.addEventListener("change", (e: Event) => {
+      const newApiKey = (e.target as HTMLInputElement).value;
+      setPref("apiKey", newApiKey);
+      ztoolkit.log(`Gemini API Key saved: ${newApiKey}`);
+    });
+
+  // 为模型选择下拉菜单添加 command 事件监听器，保存模型
+  addon.data
+    .prefs!.window.document?.querySelector(
+      `#zotero-prefpane-${config.addonRef}-model`,
+    )
+    ?.addEventListener("command", (e: Event) => {
+      const newModel = (e.target as XUL.MenuList).value;
+      setPref("model", newModel);
+      ztoolkit.log(`Gemini Model saved: ${newModel}`);
     });
 }

@@ -1,3 +1,4 @@
 /* eslint-disable no-undef */
-pref("enable", true);
-pref("input", "This is input");
+pref("extensions.zotero-gemini-analyzer.apiKey", "");
+pref("extensions.zotero-gemini-analyzer.model", "gemini-pro"); // 添加这一行，设置默认模型
+

@@ -1,24 +1,24 @@
 {
-  "name": "zotero-plugin-template",
+  "name": "zotero-gemini-analyzer",
   "type": "module",
-  "version": "3.1.0",
-  "description": "Zotero Plugin Template",
+  "version": "0.1.0",
+  "description": "Zotero Plugin Gemini Analyzer",
   "config": {
-    "addonName": "Zotero Plugin Template",
-    "addonID": "addontemplate@euclpts.com",
-    "addonRef": "addontemplate",
-    "addonInstance": "AddonTemplate",
-    "prefsPrefix": "extensions.zotero.addontemplate"
+    "addonName": "Zotero Gemini Analyzer",
+    "addonID": "zotero-gemini-analyzer@wwk.com", 
+    "addonRef": "zoterogeminianalyzer", 
+    "addonInstance": "ZoteroGeminiAnalyzer", 
+    "prefsPrefix": "extensions.zotero-gemini-analyzer"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/windingwind/zotero-plugin-template.git"
+    "url": "git+https://github.com/wangwenkai2003/gemmin-zotero.git"
   },
-  "author": "windingwind",
+  "author": "wangwenkai",
   "bugs": {
-    "url": "https://github.com/windingwind/zotero-plugin-template/issues"
+    "url": "https://github.com/wangwenkai2003/gemmin-zotero/issues"
   },
-  "homepage": "https://github.com/windingwind/zotero-plugin-template#readme",
+  "homepage": "https://github.com/wangwenkai2003/gemmin-zotero#readme",
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "start": "zotero-plugin serve",

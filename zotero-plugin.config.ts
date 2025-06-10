@@ -39,6 +39,6 @@ export default defineConfig({
     ],
   },
 
-  // If you need to see a more detailed log, uncomment the following line:
+  // 如果您需要更详细的日志，请取消注释以下行：
   // logLevel: "trace",
 });
